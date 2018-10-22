@@ -48,6 +48,7 @@ def parse_mirrorlist(raw_text):
         #         |      1.      |    2.    |             3.             |
         yield line.split("=")[-1].strip(" ").replace("$repo/os/$arch", "")
 
+
 def get_mirrorlist_offline(path="/etc/pacman.d/mirrorlist"):
     with open(path) as f:
         return [e for e in parse_mirrorlist(f.read()) if is_mirror_https({"url": e})]

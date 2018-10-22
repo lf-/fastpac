@@ -17,7 +17,7 @@ from fastpac.picker import *
 log = logging.getLogger('fastpac.__main__')
 
 
-def download_package(name, dest, databases, databases_lock, mirrorpicker, mirrorpicker_lock):
+def download_package(name, dest, databases, databases_lock, mirrorpicker, mirrorpicker_lock, arch):
     # find_package returns the filename for the current version and
     # its repo of residence. Both are needed to make the download url
     with databases_lock:
@@ -65,7 +65,7 @@ def download_package(name, dest, databases, databases_lock, mirrorpicker, mirror
             mirror = mirrorpicker.next(size=int(package_info.size))
 
         # Combine the mirror url with info from databases to make a download url
-        package_mirror = assemble_package_url(package_info, mirror)
+        package_mirror = assemble_package_url(package_info, mirror, arch=arch)
 
         # Download
         log.info('Downloading %r from %s', filename, package_mirror)
@@ -153,7 +153,8 @@ def main(args: argparse.Namespace):
                 config['databases'],
                 databases_lock,
                 config['mirrorpicker'],
-                mirrorpicker_lock
+                mirrorpicker_lock,
+                config.get('architecture', 'x86_64')
                 ))
 
         for future in futures:

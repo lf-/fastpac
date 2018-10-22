@@ -18,4 +18,7 @@ package_list_dir = '/var/cache/fastpac/packagelists'
 # Destination of downloads
 download_dir = '/var/cache/fastpac/pkg'
 
+# Optional: operating system architecture
+# architecture = 'x86_64'
+
 workers = 4

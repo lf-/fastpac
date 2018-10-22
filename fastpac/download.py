@@ -1,8 +1,9 @@
 from requests import get as get_url
 
 
-def assemble_package_url(package_info, base_url):
-    return "/".join([base_url.strip("/"), package_info.repo, "os/x86_64", package_info.filename])
+def assemble_package_url(package_info, base_url, arch):
+    return "/".join((base_url.strip("/"), package_info.repo, f'os/{arch}', package_info.filename))
+
 
 def download_file_to_path(url, path):
     request = get_url(url, stream=True)
